@@ -21,7 +21,10 @@ public class Board {
     private Long id;
 
     @NotNull
-    @Size(min = 2, max = 100)
+    @Size(min = 2, max = 100, message = "2자 이상 100자 이하로 제목을 입력해주세요.")
     private String title;
+
+    @NotNull
+    @Size(min = 2, max = 1000, message = "2자 이상 1000자 이하로 내용을 입력해주세요.")
     private String content;
 }

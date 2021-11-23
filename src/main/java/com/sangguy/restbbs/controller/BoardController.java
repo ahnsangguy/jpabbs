@@ -2,6 +2,7 @@ package com.sangguy.restbbs.controller;
 
 import com.sangguy.restbbs.model.Board;
 import com.sangguy.restbbs.repository.BoardRepository;
+import com.sangguy.restbbs.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ public class BoardController {
 
     @Autowired
     private BoardRepository boardRepository;
+
+//    @Autowired
+//    private BoardValidator boardValidator; 사용 안함 별로인거 같음
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -45,6 +49,8 @@ public class BoardController {
 
     @PostMapping("/form")
     public String postForm(@Valid Board board, BindingResult bindingResult) {
+
+//        boardValidator.validate(board, bindingResult); 사용 안함 별로인거 같음
 
         if (bindingResult.hasErrors()) {
 
