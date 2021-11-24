@@ -4,6 +4,10 @@ import com.sangguy.restbbs.model.Board;
 import com.sangguy.restbbs.repository.BoardRepository;
 import com.sangguy.restbbs.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,10 +27,17 @@ public class BoardController {
 //    private BoardValidator boardValidator; 사용 안함 별로인거 같음
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Model model, @PageableDefault(size = 2) Pageable pageable, @RequestParam(required = false, defaultValue = "") String searchText) {
 
-        List<Board> boards = boardRepository.findAll();
+//        List<Board> boards = boardRepository.findAll();
+//        Page<Board> boards = boardRepository.findAll(pageable);
+        Page<Board> boards = boardRepository.findByTitleContainingOrContentContaining(searchText, searchText, pageable);
         model.addAttribute("boards", boards);
+
+        int startPage = Math.max(1, boards.getPageable().getPageNumber() - 3);
+        int endPage = Math.min(boards.getTotalPages() == 0 ? 1 : boards.getTotalPages(), boards.getPageable().getPageNumber() + 5);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "board/list";
     }
