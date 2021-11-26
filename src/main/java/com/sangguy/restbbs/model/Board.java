@@ -1,13 +1,11 @@
 package com.sangguy.restbbs.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -27,4 +25,9 @@ public class Board {
     @NotNull
     @Size(min = 2, max = 1000, message = "2자 이상 1000자 이하로 내용을 입력해주세요.")
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 }

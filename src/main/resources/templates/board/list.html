@@ -20,6 +20,7 @@
             <th scope="col">번호</th>
             <th scope="col">제목</th>
             <th scope="col">내용</th>
+            <th scope="col">작성자</th>
         </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
             <td th:text="${board.id}"></td>
             <td th:text="${board.title}"></td>
             <td><a th:text="${board.content}" th:href="@{/board/form(id=${board.id})}"></a></td>
+            <td th:text="${board.user.username}"></td>
         </tr>
         </tbody>
     </table>

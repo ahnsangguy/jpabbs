@@ -2,12 +2,14 @@ package com.sangguy.restbbs.controller;
 
 import com.sangguy.restbbs.model.Board;
 import com.sangguy.restbbs.repository.BoardRepository;
+import com.sangguy.restbbs.service.BoardService;
 import com.sangguy.restbbs.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,9 @@ public class BoardController {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private BoardService boardService;
 
 //    @Autowired
 //    private BoardValidator boardValidator; 사용 안함 별로인거 같음
@@ -59,7 +64,7 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String postForm(@Valid Board board, BindingResult bindingResult) {
+    public String postForm(@Valid Board board, BindingResult bindingResult, Authentication authentication) {
 
 //        boardValidator.validate(board, bindingResult); 사용 안함 별로인거 같음
 
@@ -68,7 +73,8 @@ public class BoardController {
             return "board/form";
         }
 
-        boardRepository.save(board);
+        String username = authentication.getName();
+        boardService.save(board, username);
 
         return "redirect:/board/list";
     }
