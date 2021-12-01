@@ -4,6 +4,7 @@ package com.sangguy.restbbs.controller;
 import com.sangguy.restbbs.model.Board;
 import com.sangguy.restbbs.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class BoardApiController {
                 });
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/boards/{id}")
     public void deleteBoard(@PathVariable Long id) {
 

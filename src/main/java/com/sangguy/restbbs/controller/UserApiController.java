@@ -4,6 +4,7 @@ package com.sangguy.restbbs.controller;
 import com.sangguy.restbbs.model.Board;
 import com.sangguy.restbbs.model.User;
 import com.sangguy.restbbs.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class UserApiController {
 
     @Autowired
@@ -19,6 +21,11 @@ public class UserApiController {
     @GetMapping("/users")
     public List<User> getAll() {
 
+//        List<User> users = userRepository.findAll();
+//        log.debug("get(0).getBoards().size() 호출 전");
+//        log.debug("users.get(0).getBoards().size() : {}", users.get(0).getBoards().size());
+//        log.debug("get(0).getBoards().size() 호출 후");
+//        return users;
         return userRepository.findAll();
     }
 
